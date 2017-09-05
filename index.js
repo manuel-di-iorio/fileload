@@ -2,15 +2,20 @@
 const path = require("path");
 
 module.exports = new class {
+    root(path) {
+        if (!path) throw new Error("missing path parameter");
+        this.rootPath = path;
+    }
+
     file(absPath) {
-        if (!this.root) throw new Error("this.root has not been defined");
+        if (!this.rootPath) throw new Error("root path has not been defined");
         if (!absPath) throw new Error("missing path parameter");
-        return require(path.join(this.root, absPath));
+        return require(path.join(this.rootPath, absPath));
     };
 
     resolve(absPath) {
-        if (!this.root) throw new Error("this.root has not been defined");
+        if (!this.rootPath) throw new Error("root path has not been defined");
         if (!absPath) throw new Error("missing path parameter");
-        return path.join(this.root, absPath);
+        return path.join(this.rootPath, absPath);
     }
 };

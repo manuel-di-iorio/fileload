@@ -5,8 +5,9 @@ const load = require(".");
 
 assert.throws(() => load.resolve(""));
 assert.throws(() => load.file(""));
+assert.throws(() => load.root());
 
-load.root = __dirname;
+load.root(__dirname);
 
 assert.throws(() => load.resolve());
 assert.throws(() => load.file());
