@@ -1,7 +1,7 @@
 const assert = require("assert");
 const path = require("path");
 
-const load = require(".");
+const load = require("..");
 
 assert.throws(() => load.resolve(""));
 assert.throws(() => load.file(""));
