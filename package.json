@@ -1,6 +1,6 @@
 {
   "name": "fileload",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Require absolute paths relative to the provided root folder",
   "main": "index.js",
   "scripts": {

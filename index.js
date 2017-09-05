@@ -1,10 +1,11 @@
-// fileload v.1.0.0 - by Manuel Di Iorio
+// fileload - by Manuel Di Iorio
 const path = require("path");
 
 module.exports = new class {
     root(path) {
         if (!path) throw new Error("missing path parameter");
         this.rootPath = path;
+        return this;
     }
 
     file(absPath) {

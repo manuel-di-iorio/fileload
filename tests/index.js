@@ -7,7 +7,7 @@ assert.throws(() => load.resolve(""));
 assert.throws(() => load.file(""));
 assert.throws(() => load.root());
 
-load.root(__dirname);
+assert.equal(load.root(__dirname), load);
 
 assert.throws(() => load.resolve());
 assert.throws(() => load.file());
