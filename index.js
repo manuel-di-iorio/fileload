@@ -1,22 +1,33 @@
-// fileload - by Manuel Di Iorio
+/**
+ * fileload - by Manuel Di Iorio
+ * @license: MIT
+ */
+
 const path = require("path");
+let rootPath = path.dirname(require.main.filename);
 
-module.exports = new class {
-    root(path) {
-        if (!path) throw new Error("missing path parameter");
-        this.rootPath = path;
-        return this;
+module.exports = (absPath, sideActions) => {
+    // When sideActions is specified, will do other things instead to require the file, like setting the root path
+    if (sideActions) {
+        switch (sideActions) {
+            // Set or get the root path
+            case "root":
+                if (absPath) rootPath = absPath;
+                return rootPath;
+                break;
+
+            // Return the resolved path
+            case "resolve": return path.join(rootPath, absPath); break;
+        }
+        return;
     }
 
-    file(absPath) {
-        if (!this.rootPath) throw new Error("root path has not been defined");
-        if (!absPath) throw new Error("missing path parameter");
-        return require(path.join(this.rootPath, absPath));
-    };
+    // Require the resolved file
+    const obj = require(path.join(rootPath, absPath));
 
-    resolve(absPath) {
-        if (!this.rootPath) throw new Error("root path has not been defined");
-        if (!absPath) throw new Error("missing path parameter");
-        return path.join(this.rootPath, absPath);
+    if (path.extname(absPath) !== ".mjs") {
+        return obj;
+    } else {
+        return (obj.default) ? obj.default : obj;
     }
-};
+}
